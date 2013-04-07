@@ -1,0 +1,19 @@
+<html>
+	<head>
+	<title>{{ username }} Pelicules</title>
+	</head>
+<body>
+	<h1>Pelicules de {{ username }}</h1>
+	{% if pelicules %}
+	<ul>
+	{% for pelicula in pelicules %}
+	<li>
+	{{pelicula.titol}} - {{ pelicula.Genere.NomGenere}}
+	</li>
+	{% endfor %}
+	</ul>
+	{% else %}
+	<p>No te pelicules.</p>
+	{% endif %}
+</body>
+</html>
