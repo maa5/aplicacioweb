@@ -22,10 +22,10 @@ class Actor(models.Model):
 class Pelicula(models.Model):
 	Titol = models.TextField(max_length=50)
 	Data = models.IntegerField()
-	Descripcio = models.TextField(max_length=300)
+	Argument = models.TextField(max_length=300)
 	Director = models.ForeignKey(Director)
 	Genere = models.ForeignKey(Genere)
-	Actor = models.ManyToManyField(Actor, blank=True)
+	Actor = models.ManyToManyField(Actor)
 	def __str__(self):
 			return self.Titol
 

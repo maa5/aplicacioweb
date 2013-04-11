@@ -1,0 +1,21 @@
+<html>
+	<head>
+	<style type="text/css">
+	body{background-color: #d8da3d}
+	</style>
+	<title>{{titlehead}}</title>
+	</head>
+<body>
+	<div><a href="http://127.0.0.1:8000">Inici</a>
+	<h1>{{ pelicula.Titol }}</h1>
+	<ul>
+		<p><b>Argument:</b> {{pelicula.Argument}}</p>
+		<p><b>Data:</b> {{pelicula.Data}}</p>
+		<p><b>Director:</b> {{pelicula.Director}}</p>
+		<p><b>Actors/Actrius:</b></p>
+		{% for actor in actors %}
+			<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-<a href="http://127.0.0.1:8000/actors/{{actor.id}}">{{actor}}</a></p>
+		{% endfor %}
+	</ul>
+</body>
+</html>

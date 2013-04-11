@@ -1,16 +1,19 @@
 <html>
 	<head>
+	<style type="text/css">
+	body{background-color: #d8da3d}
+	</style>
+	<div><a href="http://127.0.0.1:8000">Inici</a></div>
 	<title>{{titlehead}}</title>
 	</head>
 <body>
 	<h1>{{pagetitle}}</h1>
 	<ol>
-	{% for i in list %}
+	{% for director in directors %}
 	<li>
-		{{i.Nom}}  {{i.Cognom}}
+		<a href="/directors/{{director.id}}">{{director.Nom}}  {{director.Cognom}}</a>
 	</li>
 	{% endfor %}
 	</ol>
-
 </body>
 </html>

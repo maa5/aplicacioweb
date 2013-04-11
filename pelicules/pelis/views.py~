@@ -59,7 +59,7 @@ def peliculesinfo(request, idn):
 			{
 				'namepelicula': pelid,
 				'pelicula': pelid,
-				'actors': pelid.Actor.all()
+				'actor': pelid.Actor.all()
 			})
 
 def actorspage(request):
