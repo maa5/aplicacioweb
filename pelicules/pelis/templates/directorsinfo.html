@@ -7,7 +7,11 @@
 	</head>
 <body>
 	<div><a href="http://127.0.0.1:8000">Inici</a>
-		  <a href="http://127.0.0.1:8000/directors">Endarrere</a></div>
 	<h1>{{namedirector}}</h1>
+		{% for peli in pelis %}
+	<li>
+		<p>{{peli.Titol}}<p>
+	</li>
+	{% endfor %}
 </body>
 </html>

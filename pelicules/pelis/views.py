@@ -75,11 +75,17 @@ def actorspage(request):
 def actorsinfo(request, idn):
 	try:
 		actorid = Actor.objects.get(id = idn)
+		llistapeli=[]
+		for peli in Pelicula.objects.all():
+			for actor in peli.Actor.all():
+				if (actor.id==actorid.id and peli not in llistapeli ):
+					llistapeli.append(peli)
 	except Actor.DoesNotExist:
 		raise Http404
 	return render_to_response(
 			'actorsinfo.html',
 			{
+				'llistapelis': llistapeli,
 				'nameactor': actorid,
 				'info': actorid
 
@@ -95,15 +101,18 @@ def directorspage(request):
 	output = template.render(variables)
 	return HttpResponse(output)
 
-def directorsinfo(request, idn):
+def directorsinfo(request, Nom):
 	try:
-		directorid = Director.objects.get(id = idn)
+		name = Director.objects.get(Nom = Nom)
+		titol = Pelicula.objects.filter(Director = name)
 	except Director.DoesNotExist:
 		raise Http404
 	return render_to_response(
 			'directorsinfo.html',
 			{
-				'namedirector': directorid
+				'namedirector': name,
+				'pelis': titol
+				
 			})
 
 

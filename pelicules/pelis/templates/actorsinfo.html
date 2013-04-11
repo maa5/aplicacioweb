@@ -6,9 +6,10 @@
 	<title>{{titlehead}}</title>
 	</head>
 <body>
-	<div><a href="http://127.0.0.1:8000">Inici</a>
-		  <a href="http://127.0.0.1:8000/actors">Endarrere</a></div>
+	<div><a href="http://127.0.0.1:8000">Inici</a>	
 	<h1>{{nameactor}}</h1>
-	<p>{{info.pelicula.Titol}}</p>
+	{% for peli in llistapelis %}
+			<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-<a href="http://127.0.0.1:8000/pelicules/{{peli.id}}">{{peli}}</a></p>
+	{% endfor %}
 </body>
 </html>

@@ -17,7 +17,7 @@ urlpatterns = patterns('',
 	 url(r'^actors/$', actorspage),
 	 url(r'^actors/(\d+)/$', actorsinfo),
 	 url(r'^directors/$', directorspage),
-	 url(r'^directors/(\d+)/$', directorsinfo),
+	 url(r'^directors/(\w+)/$', directorsinfo),
     #url(r'^pelicules/', include('pelicules.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
