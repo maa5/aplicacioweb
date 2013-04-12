@@ -4,13 +4,12 @@ from django.template.loader import get_template
 from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from pelis.models import *
-#import pelis.models
 
 def mainpage(request):
 	template = get_template('mainpage.html')
 	variables = Context({
-				'titlehead': 'Pelicules',
-				'pagetitle': 'Benvingut a Pelicules',
+				'titlehead': 'Movies',
+				'pagetitle': 'Movies',
 				'user': request.user,
 				})
 	output = template.render(variables)
@@ -19,8 +18,8 @@ def mainpage(request):
 def generepage(request):
 	template = get_template('generepage.html')
 	variables = Context({
-				'titlehead': 'Generes',
-				'pagetitle': 'Generes',
+				'titlehead': 'Genres',
+				'pagetitle': 'Genres',
 				'generes': Genere.objects.all()
 				})
 	output = template.render(variables)
@@ -42,8 +41,8 @@ def genereinfo(request, NomGenere):
 def peliculespage(request):
 	template = get_template('peliculespage.html')
 	variables = Context({
-				'titlehead': 'Pelicules',
-				'pagetitle': 'Pelicules',
+				'titlehead': 'Movies',
+				'pagetitle': 'Movies',
 				'pelicules' : Pelicula.objects.all()
 			})
 	output = template.render(variables)
@@ -85,9 +84,8 @@ def actorsinfo(request, idn):
 	return render_to_response(
 			'actorsinfo.html',
 			{
-				'llistapelis': llistapeli,
 				'nameactor': actorid,
-				'info': actorid
+				'llistapelis': llistapeli
 
 			})
 
@@ -96,14 +94,14 @@ def directorspage(request):
 	variables = Context({
 				'titlehead': 'Directors',
 				'pagetitle': 'Directors',
-				'directors' : Director.objects.all(),
+				'directors' : Director.objects.all()
 			})
 	output = template.render(variables)
 	return HttpResponse(output)
 
-def directorsinfo(request, Nom):
+def directorsinfo(request, idn):
 	try:
-		name = Director.objects.get(Nom = Nom)
+		name = Director.objects.get(id = idn)
 		titol = Pelicula.objects.filter(Director = name)
 	except Director.DoesNotExist:
 		raise Http404

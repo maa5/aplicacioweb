@@ -1,15 +1,45 @@
 <html>
-	<head>
-	<style type="text/css">
-	body{background-color: #d8da3d}
-	</style>
-	<title>{{titlehead}}</title>
-	</head>
+<head>
+<title>{{titlehead}}</title>
+<style type="text/css" rel="stylesheet">
+  {% include 'default.css' %}
+</style>
+</head>
 <body>
-	<div><a href="http://127.0.0.1:8000">Inici</a>	
-	<h1>{{nameactor}}</h1>
-	{% for peli in llistapelis %}
-			<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-<a href="http://127.0.0.1:8000/pelicules/{{peli.id}}">{{peli}}</a></p>
-	{% endfor %}
+<div id="wrapper">
+	<div id="header-wrapper">
+		<div id="header" class="container">
+			<div id="logo">
+				<h1><a href="http://127.0.0.1:8000/">Movies</a></h1>
+			</div>
+			<div id="menu">
+				<ul>
+					<li class="active"><a href="http://127.0.0.1:8000/">Homepage</a></li>
+					<li><a href="/generes">Genres</a></li>
+					<li><a href="/pelicules">Movies</a></li>
+					<li><a href="/actors">Actors</a></li>
+					<li><a href="/directors">Directors</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div id="page" class="container">
+		<div id="content">
+			<div id="box1">
+				<h1>{{nameactor}}</h1>
+				<img src={{nameactor.Foto}} heigth=400 width=200/>
+				<p> {{nameactor.descripcio}} </p>
+				<h3> Data naixement </h3>
+				<p> {{nameactor.date}} </p>
+				<ol>
+				{% for peli in llistapelis %}
+				<li>
+					<p><a href="/pelicules/{{peli.id}}">{{peli}}</a></p>
+				</li>
+				{% endfor %}
+				</ol>
+			</div>
+		</div>
+	</div>
+</div>
 </body>
-</html>

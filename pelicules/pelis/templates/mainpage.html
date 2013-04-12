@@ -1,25 +1,41 @@
 <html>
-	<head>
-	<style type="text/css">
-	body{background-color: #d8da3d}
-	</style>
-	<title>{{titlehead}}</title>
-	</head>
+<head>
+<title>{{titlehead}}</title>
+<style type="text/css" rel="stylesheet">
+  {% include 'default.css' %}
+</style>
+</head>
 <body>
-	<h1>{{pagetitle}}</h1>
-	{% if user.username %}
-		<p>Benvingut {{ user.username }}, aquí podrà gestionar les seves pelicules.</p>
-
-		<A HREF = "/generes">
-			<input type="button" value="Generes" style='width:300px; height:50px'></a>
-		<A HREF = "/pelicules">
-			<input type="button" value="Pelicules" style='width:300px; height:50px'></a>
-		<A HREF = "/actors">
-			<input type="button" value="Actors" style='width:300px; height:50px'></a>
-		<A HREF = "/directors">
-			<input type="button" value="Directors" style='width:300px; height:50px'></a>
-	{% else %}
-		<p>Benvingut usuari, obligatori fer <a href="/login/">login</a> per gestionar pelicules.</p>
-	{% endif %}
+<div id="wrapper">
+	<div id="header-wrapper">
+		<div id="header" class="container">
+			<div id="logo">
+				<h1><a href="http://127.0.0.1:8000/">{{pagetitle}}</a></h1>
+			</div>
+			{% if user.username %}
+			<div id="menu">
+				<ul>
+					<li class="active"><a href="http://127.0.0.1:8000/">Homepage</a></li>
+					<li><a href="/generes">Genres</a></li>
+					<li><a href="/pelicules">Movies</a></li>
+					<li><a href="/actors">Actors</a></li>
+					<li><a href="/directors">Directors</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div id="page" class="container">
+		<div id="content">
+			<div id="box1">
+				<h2 class="title">Welcome to Movies App</h2><br/>
+				<p>Welcome {{ user.username }}, here you can manage your film.</p>
+				{% block content %}{% endblock %}
+			{% else %}
+				<p>Welcome user, necessary to do <a href="/login/">login</a> for manage films.</p>
+			{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
 </body>
 </html>

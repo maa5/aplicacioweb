@@ -1,21 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
 <html>
-	<head>
-	<style type="text/css">
-	body{background-color: #d8da3d}
-	</style>
-	<title>{{titlehead}}</title>
-	</head>
+<head>
+<title>{{titlehead}}</title>
+<style type="text/css" rel="stylesheet">
+  {% include 'default.css' %}
+</style>
+</head>
 <body>
-	<div><a href="http://127.0.0.1:8000">Inici</a>
-	<h1>{{ pelicula.Titol }}</h1>
-	<ul>
-		<p><b>Argument:</b> {{pelicula.Argument}}</p>
-		<p><b>Data:</b> {{pelicula.Data}}</p>
-		<p><b>Director:</b> {{pelicula.Director}}</p>
-		<p><b>Actors/Actrius:</b></p>
-		{% for actor in actors %}
-			<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-<a href="http://127.0.0.1:8000/actors/{{actor.id}}">{{actor}}</a></p>
-		{% endfor %}
-	</ul>
+<div id="wrapper">
+	<div id="header-wrapper">
+		<div id="header" class="container">
+			<div id="logo">
+				<h1><a href="http://127.0.0.1:8000/">Movies</a></h1>
+			</div>
+			<div id="menu">
+				<ul>
+					<li class="active"><a href="http://127.0.0.1:8000/">Homepage</a></li>
+					<li><a href="/generes">Genres</a></li>
+					<li><a href="/pelicules">Movies</a></li>
+					<li><a href="/actors">Actors</a></li>
+					<li><a href="/directors">Directors</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div id="page" class="container">
+		<div id="content">
+			<div id="box1">
+				<h1>{{ pelicula.Titol }}</h1>
+				<img src={{pelicula.Foto}} heigth=400 width=200/>
+			
+					<p><b>Argument:</b> {{pelicula.Argument}}</p>
+					<p><b>Data:</b> {{pelicula.Data}}</p>
+					<p><b>Director:</b> <a href="/directors/{{pelicula.Director.id}}">{{pelicula.Director}}</a></p>
+					<p><b>Actors/Actrius:</b></p>
+					<ol>
+					{% for actor in actors %}
+					<li>
+						<p><a href="/actors/{{actor.id}}">{{actor}}</a></p>
+					</li>
+					{% endfor %}
+					</ol>
+				
+			</div>
+		</div>
+	</div>
+</div>
 </body>
-</html>
+<html>
