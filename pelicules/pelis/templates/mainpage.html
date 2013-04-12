@@ -29,7 +29,6 @@
 			<div id="box1">
 				<h2 class="title">Welcome to Movies App</h2><br/>
 				<p>Welcome {{ user.username }}, here you can manage your film.</p>
-				{% block content %}{% endblock %}
 			{% else %}
 				<p>Welcome user, necessary to do <a href="/login/">login</a> for manage films.</p>
 			{% endif %}
