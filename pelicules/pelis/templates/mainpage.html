@@ -12,7 +12,7 @@
 			<div id="logo">
 				<h1><a href="http://127.0.0.1:8000/">{{pagetitle}}</a></h1>
 			</div>
-			{% if user.username %}
+
 			<div id="menu">
 				<ul>
 					<li class="active"><a href="http://127.0.0.1:8000/">Homepage</a></li>
@@ -27,11 +27,14 @@
 	<div id="page" class="container">
 		<div id="content">
 			<div id="box1">
-				<h2 class="title">Welcome to Movies App</h2><br/>
-				<p>Welcome {{ user.username }}, here you can manage your film.</p>
-			{% else %}
-				<p>Welcome user, necessary to do <a href="/login/">login</a> for manage films.</p>
-			{% endif %}
+			{% block content %}
+					<h2 class="title">Welcome to Movies App</h2><br/>
+					{% if user.username %}
+						<p>Welcome {{ user.username }}, here you can manage your film.</p>
+					{% else %}
+						<p>Welcome,<a href="/login/">login</a> for manage films.</p>
+					{% endif %}
+			{% endblock %}
 			</div>
 		</div>
 	</div>

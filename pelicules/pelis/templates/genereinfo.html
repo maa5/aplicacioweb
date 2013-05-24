@@ -1,42 +1,11 @@
-<html>
-<head>
-<title>{{titlehead}}</title>
-<style type="text/css" rel="stylesheet">
-  {% include 'default.css' %}
-</style>
-</head>
-<body>
-<div id="wrapper">
-	<div id="header-wrapper">
-		<div id="header" class="container">
-			<div id="logo">
-				<h1><a href="http://127.0.0.1:8000/">Movies</a></h1>
-			</div>
-			<div id="menu">
-				<ul>
-					<li class="active"><a href="http://127.0.0.1:8000/">Homepage</a></li>
-					<li><a href="/generes">Genres</a></li>
-					<li><a href="/pelicules">Movies</a></li>
-					<li><a href="/actors">Actors</a></li>
-					<li><a href="/directors">Directors</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-	<div id="page" class="container">
-		<div id="content">
-			<div id="box1">
-				<h1>{{ namegenere }}</h1>
-				<ol>
-				{% for pelicula in pelicules %}
-				<li>
-					<a href="/pelicules/{{pelicula.id}}">{{pelicula.Titol}}</a>
-				</li>
-				{% endfor %}
-				</ol>
-			</div>
-		</div>
-	</div>
-</div>
-</body>
-<html>
+{% extends "mainpage.html"%}
+{% block content %}
+<h1>{{ namegenere }}</h1>
+	<ol>
+		{% for pelicula in pelicules %}
+		<li>
+			<a href="/pelicules/{{pelicula.id}}">{{pelicula.Titol}}</a>
+		</li>
+		{% endfor %}
+	</ol>
+{% endblock %}

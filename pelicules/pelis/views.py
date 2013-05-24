@@ -4,6 +4,12 @@ from django.template.loader import get_template
 from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from pelis.models import *
+from forms import *
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
+from django.views.generic import DetailView
+from django.views.generic.edit import CreateView, DeleteView
 
 def mainpage(request):
 	template = get_template('mainpage.html')
@@ -43,7 +49,8 @@ def peliculespage(request):
 	variables = Context({
 				'titlehead': 'Movies',
 				'pagetitle': 'Movies',
-				'pelicules' : Pelicula.objects.all()
+				'pelicules' : Pelicula.objects.all(),
+				'user': request.user
 			})
 	output = template.render(variables)
 	return HttpResponse(output)
@@ -66,7 +73,8 @@ def actorspage(request):
 	variables = Context({
 				'titlehead': 'Actors',
 				'pagetitle': 'Actors',
-				'actors' : Actor.objects.all()
+				'actors' : Actor.objects.all(),
+				'user': request.user
 			})
 	output = template.render(variables)
 	return HttpResponse(output)
@@ -94,7 +102,8 @@ def directorspage(request):
 	variables = Context({
 				'titlehead': 'Directors',
 				'pagetitle': 'Directors',
-				'directors' : Director.objects.all()
+				'directors' : Director.objects.all(),
+				'user': request.user
 			})
 	output = template.render(variables)
 	return HttpResponse(output)
@@ -112,5 +121,99 @@ def directorsinfo(request, idn):
 				'pelis': titol
 				
 			})
+
+def userpage(request, username):
+
+	try:
+		user = User.objects.get(username=username)
+	except:
+		raise Http404('User not found.')
+	return render_to_response(
+			'userpage.html',
+			{
+				'username':username,
+			})
+
+# Detail
+class PeliculaDetail(DetailView):
+	model = Pelicula
+	template_name = 'peliculespage.html'
+
+	def get_context_data(self, **kwargs):
+		context = super(PeliculaDetail, self).get_context_data(**kwargs)
+		return context
+
+class GenereDetail(DetailView):
+	model = Pelicula
+	template_name = 'generepage.html'
+
+	def get_context_data(self, **kwargs):
+		context = super(PeliculaDetail, self).get_context_data(**kwargs)
+		return context
+
+class ActorDetail(DetailView):
+	model = Pelicula
+	template_name = 'actorspage.html'
+
+	def get_context_data(self, **kwargs):
+		context = super(GenereDetail, self).get_context_data(**kwargs)
+		return context
+
+class DirectorDetail(DetailView):
+	model = Pelicula
+	template_name = 'directorspage.html'
+
+	def get_context_data(self, **kwargs):
+		context = super(DirectorDetail, self).get_context_data(**kwargs)
+		return context
+
+# Create
+class PeliculaCreate(CreateView):
+	model = Pelicula
+	template_name = 'addmovie.html'
+	form_class = PeliculaForm
+
+	def form_valid(self, form):
+		form.instance.user = self.request.user
+		return super(PeliculaCreate, self).form_valid(form)
+
+class ActorCreate(CreateView):
+	model = Actor
+	template_name = 'addactor.html'
+	form_class = ActorForm
+
+	def form_valid(self, form):
+		form.instance.user = self.request.user
+		return super(ActorCreate, self).form_valid(form)
+
+class DirectorCreate(CreateView):
+	model = Director
+	template_name = 'adddirector.html'
+	form_class = DirectorForm
+
+	def form_valid(self, form):
+		form.instance.user = self.request.user
+		return super(DirectorCreate, self).form_valid(form)
+
+# Delete
+class PeliculaDelete(DeleteView):
+	model = Pelicula
+	template_name = 'delete.html'
+	success_url = '/pelicules'
+
+class ActorDelete(DeleteView):
+	model = Actor
+	template_name = 'delete.html'
+	success_url = '/actors'
+
+class DirectorDelete(DeleteView):
+	model = Director
+	template_name = 'delete.html'
+	success_url = '/directors'
+
+
+
+
+
 
 

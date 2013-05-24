@@ -1,42 +1,17 @@
-<html>
-<head>
-<title>{{titlehead}}</title>
-<style type="text/css" rel="stylesheet">
-  {% include 'default.css' %}
-</style>
-</head>
-<body>
-<div id="wrapper">
-	<div id="header-wrapper">
-		<div id="header" class="container">
-			<div id="logo">
-				<h1><a href="http://127.0.0.1:8000/">Movies</a></h1>
-			</div>
-			<div id="menu">
-				<ul>
-					<li class="active"><a href="http://127.0.0.1:8000/">Homepage</a></li>
-					<li><a href="/generes">Genres</a></li>
-					<li><a href="/pelicules">Movies</a></li>
-					<li><a href="/actors">Actors</a></li>
-					<li><a href="/directors">Directors</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-	<div id="page" class="container">
-		<div id="content">
-			<div id="box1">
-				<h2 class="title">{{pagetitle}}</h2><br/>
-					<ol>
-					{% for actor in actors %}
-					<li>
-						<a href="/actors/{{actor.id}}">{{actor.Nom}}  {{actor.Cognom}}</a>
-					</li>
-					{% endfor %}
-					</ol>
-			</div>
-		</div>
-	</div>
-</div>
-</body>
-</html>
+{% extends "mainpage.html"%}
+{% block content %}
+<h2 class="title">{{pagetitle}}</h2><br/>
+	<ol>
+		{% for actor in actors %}
+		<li>		
+				<a href="/actors/{{actor.id}}"><h3>{{actor.Nom}}  {{actor.Cognom}}</h3></a>
+				{% if user.id == actor.user.id %}
+					<a href="/actors/{{actor.id}}/edit"> (Edit Actor)</a>
+					<a href="/actors/{{actor.id}}/delete"> (Delete Actor)</a>
+				{% endif %}
+		</li>
+		{% endfor %}
+	</ol>
+<div style="background-color:orange;text-align:center;width:300">
+	<a href="/actors/create">Add Actor</a></div>
+{% endblock %}}

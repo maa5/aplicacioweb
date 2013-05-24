@@ -1,46 +1,16 @@
-<html>
-<head>
-<title>{{titlehead}}</title>
-<style type="text/css" rel="stylesheet">
-  {% include 'default.css' %}
-</style>
-</head>
-<body>
-<div id="wrapper">
-	<div id="header-wrapper">
-		<div id="header" class="container">
-			<div id="logo">
-				<h1><a href="http://127.0.0.1:8000/">Movies</a></h1>
-			</div>
-			<div id="menu">
-				<ul>
-					<li class="active"><a href="http://127.0.0.1:8000/">Homepage</a></li>
-					<li><a href="/generes">Genres</a></li>
-					<li><a href="/pelicules">Movies</a></li>
-					<li><a href="/actors">Actors</a></li>
-					<li><a href="/directors">Directors</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-	<div id="page" class="container">
-		<div id="content">
-			<div id="box1">
-				<h1>{{namedirector}}</h1>
-				<img src={{namedirector.Foto}} heigth=400 width=200/>
-				<p>{{namedirector.descripcio}} </p>
-				<h3> Data naixement: </h3>
-				<p>{{namedirector.date}} </p>
-				<h3> Pelicules del director:<h3>
-				<ol>
-				{% for peli in pelis %}
-				<li>
-					<p><a href="/pelicules/{{peli.id}}">{{peli}}</a><p>
-				</li>
-				{% endfor %}
-				</ol>
-			</div>
-		</div>
-	</div>
-</div>
-</body>
+{% extends "mainpage.html"%}
+{% block content %}
+<h1>{{namedirector}}</h1>
+<img src={{namedirector.Foto}} heigth=400 width=200/>
+<p>{{namedirector.descripcio}} </p>
+<h3> Data naixement: </h3>
+<p>{{namedirector.date}} </p>
+<h3> Pelicules del director:<h3>
+<ol>
+	{% for peli in pelis %}
+	<li>
+		<p><a href="/pelicules/{{peli.id}}">{{peli}}</a><p>
+	</li>
+	{% endfor %}
+</ol>
+{% endblock %}
