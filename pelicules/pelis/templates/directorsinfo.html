@@ -2,10 +2,9 @@
 {% block content %}
 <h1>{{namedirector}}</h1>
 <img src={{namedirector.Foto}} heigth=400 width=200/>
-<p>{{namedirector.descripcio}} </p>
-<h3> Data naixement: </h3>
-<p>{{namedirector.date}} </p>
-<h3> Pelicules del director:<h3>
+<p>{{namedirector.Descripcio}}</p>
+<p><b>Data naixement:</b> {{namedirector.date}}</p>
+<p><b>Pelicules del director:</b></p>
 <ol>
 	{% for peli in pelis %}
 	<li>
