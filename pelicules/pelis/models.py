@@ -8,10 +8,10 @@ from datetime import date
 class Director(models.Model):
 	Nom = models.TextField(max_length=50)
 	Cognom = models.TextField(max_length=50)
-	date = models.DateTimeField()
+	date = models.DateField()
 	Descripcio=models.TextField(max_length=500)
 	Foto=models.TextField(max_length=100)
-	user = models.ForeignKey(User, default=User.objects.get(id=1))
+	user = models.ForeignKey(User)
 
 	def __str__(self):
 			return '%s %s' % (self.Nom, self.Cognom)
@@ -33,10 +33,10 @@ class Genere(models.Model):
 class Actor(models.Model):
 	Nom = models.TextField(max_length=50, blank=True)
 	Cognom = models.TextField(max_length=50, blank=True)
-	date = models.DateTimeField()
+	date = models.DateField()
 	descripcio=models.TextField(max_length=500)
 	Foto=models.TextField(max_length=100)
-	user = models.ForeignKey(User, default=User.objects.get(id=1))
+	user = models.ForeignKey(User)
 
 	def __str__(self):
 			return '%s %s' % (self.Nom, self.Cognom)
@@ -51,7 +51,7 @@ class Pelicula(models.Model):
 	Genere = models.ForeignKey(Genere)
 	Foto=models.TextField(max_length=100)
 	Actor = models.ManyToManyField(Actor)
-	user = models.ForeignKey(User, default=User.objects.get(id=1))
+	user = models.ForeignKey(User)
 
 	def __str__(self):
 			return self.Titol

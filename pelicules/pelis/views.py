@@ -9,7 +9,13 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView
-from django.views.generic.edit import CreateView, DeleteView
+from django.views.generic.edit import CreateView
+from django.views.generic.edit import DeleteView
+from serializers import PeliculesSerializer, GeneresSerializer, ActorsSerializer, DirectorsSerializer
+from rest_framework import generics
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.reverse import reverse
 
 def mainpage(request):
 	template = get_template('mainpage.html')
@@ -170,7 +176,7 @@ class DirectorDetail(DetailView):
 # Create
 class PeliculaCreate(CreateView):
 	model = Pelicula
-	template_name = 'addmovie.html'
+	template_name = 'formcreate.html'
 	form_class = PeliculaForm
 
 	def form_valid(self, form):
@@ -179,7 +185,7 @@ class PeliculaCreate(CreateView):
 
 class ActorCreate(CreateView):
 	model = Actor
-	template_name = 'addactor.html'
+	template_name = 'formcreate.html'
 	form_class = ActorForm
 
 	def form_valid(self, form):
@@ -188,7 +194,7 @@ class ActorCreate(CreateView):
 
 class DirectorCreate(CreateView):
 	model = Director
-	template_name = 'adddirector.html'
+	template_name = 'formcreate.html'
 	form_class = DirectorForm
 
 	def form_valid(self, form):
@@ -211,7 +217,38 @@ class DirectorDelete(DeleteView):
 	template_name = 'delete.html'
 	success_url = '/directors'
 
+# RESTful API
+class APIPeliculesList(generics.ListCreateAPIView):
+	model = Pelicula
+	serializer_class = PeliculesSerializer
 
+class APIPeliculesDetail(generics.RetrieveUpdateDestroyAPIView):
+	model = Pelicula
+	serializer_class = PeliculesSerializer
+
+class APIGeneresList(generics.ListCreateAPIView):
+	model = Genere
+	serializer_class = GeneresSerializer
+
+class APIGeneresDetail(generics.RetrieveUpdateDestroyAPIView):
+	model = Genere
+	serializer_class = GeneresSerializer
+
+class APIActorsList(generics.ListCreateAPIView):
+	model = Actor
+	serializer_class = ActorsSerializer
+
+class APIActorsDetail(generics.RetrieveUpdateDestroyAPIView):
+	model = Actor
+	serializer_class = ActorsSerializer
+
+class APIDirectorsList(generics.ListCreateAPIView):
+	model = Director
+	serializer_class = DirectorsSerializer
+
+class APIDirectorsDetail(generics.RetrieveUpdateDestroyAPIView):
+	model = Director
+	serializer_class = DirectorsSerializer
 
 
 
