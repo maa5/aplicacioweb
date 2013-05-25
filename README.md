@@ -5,5 +5,6 @@ Aplicacio web de pelicules
 
 Logins:
 
-Usuari: admin ---------- Password: admin
-Usuari: user ----------- Password: user
+  Usuari: admin ---------- Password: admin
+  
+  Usuari: user ----------- Password: user
