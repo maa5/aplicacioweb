@@ -61,6 +61,22 @@ class Migration(SchemaMigration):
         ))
         db.create_unique(m2m_table_name, ['pelicula_id', 'actor_id'])
 
+        # Adding model 'Review'
+        db.create_table('pelis_review', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('rating', self.gf('django.db.models.fields.PositiveSmallIntegerField')(default=3)),
+            ('comment', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+        ))
+        db.send_create_signal('pelis', ['Review'])
+
+        # Adding model 'PeliculesReview'
+        db.create_table('pelis_peliculesreview', (
+            ('review_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['pelis.Review'], unique=True, primary_key=True)),
+            ('Pelicula', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['pelis.Pelicula'])),
+        ))
+        db.send_create_signal('pelis', ['PeliculesReview'])
+
 
     def backwards(self, orm):
         # Deleting model 'Director'
@@ -77,6 +93,12 @@ class Migration(SchemaMigration):
 
         # Removing M2M table for field Actor on 'Pelicula'
         db.delete_table(db.shorten_name('pelis_pelicula_Actor'))
+
+        # Deleting model 'Review'
+        db.delete_table('pelis_review')
+
+        # Deleting model 'PeliculesReview'
+        db.delete_table('pelis_peliculesreview')
 
 
     models = {
@@ -151,6 +173,18 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'Pelicula'},
             'Titol': ('django.db.models.fields.TextField', [], {'max_length': '50'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"})
+        },
+        'pelis.peliculesreview': {
+            'Meta': {'object_name': 'PeliculesReview', '_ormbases': ['pelis.Review']},
+            'Pelicula': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['pelis.Pelicula']"}),
+            'review_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['pelis.Review']", 'unique': 'True', 'primary_key': 'True'})
+        },
+        'pelis.review': {
+            'Meta': {'object_name': 'Review'},
+            'comment': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'rating': ('django.db.models.fields.PositiveSmallIntegerField', [], {'default': '3'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"})
         }
     }

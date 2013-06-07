@@ -79,6 +79,8 @@ urlpatterns = patterns('',
 		DirectorDelete.as_view(),
 		name='director_delete'),
 
+	 url(r'^pelicules/(?P<idn>\d+)/reviews/create$', 'pelis.views.review', name='review_create'),
+
 	 # RESTful API
     url(r'^api/pelicules/$', APIPeliculesList.as_view(), name='pelicules-list'),
     url(r'^api/pelicules/(?P<pk>\d+)/$', APIPeliculesDetail.as_view(), name='pelicules-detail'),

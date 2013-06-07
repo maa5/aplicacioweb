@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from models import Pelicula, Director, Actor, Genere
+from models import Pelicula, Director, Actor, Genere, Review
 
 class PeliculaForm(ModelForm):
 	class Meta:
@@ -19,4 +19,9 @@ class DirectorForm(ModelForm):
 class ActorForm(ModelForm):
 	class Meta: 
 		model = Actor
+		exclude = ('user')
+
+class ReviewForm(ModelForm):
+	class Meta:
+		model = Review
 		exclude = ('user')

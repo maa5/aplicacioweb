@@ -64,6 +64,12 @@ def peliculespage(request):
 def peliculesinfo(request, idn):
 	try:
 		pelid = Pelicula.objects.get(id = idn)
+		reviews = PeliculesReview.objects.all().filter(Pelicula=idn)
+		RATING_CHOICES = PeliculesReview.RATING_CHOICES
+		mitja=0.0
+		for review in reviews:
+			mitja=mitja+review.rating
+		mitja=mitja/(len(reviews))
 	except Pelicula.DoesNotExist:
 		raise Http404
 	return render_to_response(
@@ -71,7 +77,11 @@ def peliculesinfo(request, idn):
 			{
 				'namepelicula': pelid,
 				'pelicula': pelid,
-				'actors': pelid.Actor.all()
+				'actors': pelid.Actor.all(),
+				'reviews': reviews,
+				'user': request.user,
+				'RATING_CHOICES': RATING_CHOICES,
+				'mitja': mitja
 			})
 
 def actorspage(request):
@@ -140,6 +150,16 @@ def userpage(request, username):
 				'username':username,
 			})
 
+def review(request, idn):
+	pelicula = get_object_or_404(Pelicula, id=idn)
+	review = PeliculaReview(
+		rating = request.POST['rating'],
+		comment = request.POST['comment'],
+		user = request.user,
+		pelicula = pelicula)
+	review.save()
+	return HttpResponseRedirect(reverse('pelis:pelicula_detail', kwargs=pelicula.id))
+
 # Detail
 class PeliculaDetail(DetailView):
 	model = Pelicula
@@ -147,6 +167,7 @@ class PeliculaDetail(DetailView):
 
 	def get_context_data(self, **kwargs):
 		context = super(PeliculaDetail, self).get_context_data(**kwargs)
+		context['RATING_CHOICES'] = PeliculaReview.RATING_CHOICES
 		return context
 
 class GenereDetail(DetailView):
@@ -200,6 +221,7 @@ class DirectorCreate(CreateView):
 	def form_valid(self, form):
 		form.instance.user = self.request.user
 		return super(DirectorCreate, self).form_valid(form)
+	
 
 # Delete
 class PeliculaDelete(DeleteView):

@@ -1,9 +1,9 @@
 {% extends "mainpage.html"%}
 {% load static %}
 {% block content %}
-<h1>{{ pelicula.Titol }}</h1>
-	<img src={{pelicula.Foto}} heigth=400 width=200/>
-			
+<span vocab="http://schema.org/"  typeof="Pelicula">
+<h1><span property="name">{{ pelicula.Titol }}</span></h1>
+	<img src={{pelicula.Foto}} heigth=400 width=200/>		
 	<p><b>Argument:</b> {{pelicula.Argument}}</p>
 	<p><b>Data:</b> {{pelicula.Data}}</p>
 	<p><b>Director:</b> <a href="/directors/{{pelicula.Director.id}}">{{pelicula.Director}}</a></p>
@@ -15,4 +15,43 @@
 		</li>
 		{% endfor %}
 	</ol>
+
+<h3>Reviews</h3>
+{% if reviews %}
+	<span rel="aggregateRating">
+   	<p typeof="AggregateRating">
+   		Puntuacio: {{mitja}}
+   		<span property="ratingValue">{{pelicula.averageRating|stringformat:".1f"}}</span>
+   		{% with reviews|length as reviewCount %}
+   			(<span property="reviewCount">{{reviewCount}}</span> comentari{{reviewCount|pluralize}})	
+   		{% endwith %}	
+   	</p>	  
+	</span>	
+   <ul rel="review">
+   {% for review in reviews %}
+   	<li typeof="Review">
+     		<p rel="reviewRating" typeof="Rating">
+     		<span property="worstRating" content="1"></span>
+     		<span property="ratingValue">{{ review.rating }}</span> star{{ review.rating|pluralize }}
+     		<span property="bestRating" content="5"></span>
+     		<p property="description">{{ review.comment }}</p>
+   	</li>
+   {% endfor %}
+   </ul>
+{% endif %}
+</span>
+
+<h3>Add Review</h3>
+	<form action="{% url 'pelis:review_create' pelicula.id %}" method="POST">
+    {% csrf_token %}
+    	Message: <textarea name="comment" id="comment" rows="4"></textarea>
+    <p>Rating:</p>
+    <p>
+    {% for rate in RATING_CHOICES %}
+        <input type="radio" name="rating" id="rating{{ forloop.counter }}" value="{{ rate.1 }}" />
+        <label for="choice{{ forloop.counter }}">{{ rate.1 }} star{{ rate.0|pluralize }}</label><br />
+    {% endfor %}
+    </p>
+    <input type="submit" value="Review" />
+</form>
 {% endblock %}

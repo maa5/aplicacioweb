@@ -58,6 +58,15 @@ class Pelicula(models.Model):
 	def get_absolute_url(self):
 			return reverse('pelicula_detail', kwargs={'idn': self.pk})
 
+class Review(models.Model):
+    RATING_CHOICES = ((1,'1'),(2,'2'),(3,'3'),(4,'4'),(5,'5'))
+    rating = models.PositiveSmallIntegerField('Ratings (stars)', blank=False, default=3, choices=RATING_CHOICES)
+    comment = models.TextField(blank=True, null=True)
+    user = models.ForeignKey(User)
+
+class PeliculesReview(Review):
+    Pelicula = models.ForeignKey(Pelicula)
+
 
 
 
