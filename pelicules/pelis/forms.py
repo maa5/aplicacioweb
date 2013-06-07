@@ -21,7 +21,3 @@ class ActorForm(ModelForm):
 		model = Actor
 		exclude = ('user')
 
-class ReviewForm(ModelForm):
-	class Meta:
-		model = Review
-		exclude = ('user')

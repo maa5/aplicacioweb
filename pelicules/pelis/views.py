@@ -1,5 +1,6 @@
 from django.http import HttpResponse, Http404
-from django.template import Context
+from django.core import urlresolvers
+from django.template import Context,RequestContext
 from django.template.loader import get_template
 from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
@@ -67,11 +68,12 @@ def peliculesinfo(request, idn):
 		reviews = PeliculesReview.objects.all().filter(Pelicula=idn)
 		RATING_CHOICES = PeliculesReview.RATING_CHOICES
 		mitja=0.0
-		for review in reviews:
-			mitja=mitja+review.rating
-		mitja=mitja/(len(reviews))
+		if(len(reviews)!=0):
+			for review in reviews:
+				mitja=mitja+review.rating
+			mitja=mitja/(len(reviews))
 	except Pelicula.DoesNotExist:
-		raise Http404
+		raise Http404('Error pelicula')
 	return render_to_response(
 			'peliculesinfo.html',
 			{
@@ -82,7 +84,7 @@ def peliculesinfo(request, idn):
 				'user': request.user,
 				'RATING_CHOICES': RATING_CHOICES,
 				'mitja': mitja
-			})
+			},context_instance=RequestContext(request))
 
 def actorspage(request):
 	template = get_template('actorspage.html')
@@ -150,15 +152,15 @@ def userpage(request, username):
 				'username':username,
 			})
 
-def review(request, idn):
-	pelicula = get_object_or_404(Pelicula, id=idn)
-	review = PeliculaReview(
+def review(request, pk):
+	pelicula = get_object_or_404(Pelicula, id=pk)
+	review = PeliculesReview(
 		rating = request.POST['rating'],
 		comment = request.POST['comment'],
 		user = request.user,
-		pelicula = pelicula)
+		Pelicula = pelicula)
 	review.save()
-	return HttpResponseRedirect(reverse('pelis:pelicula_detail', kwargs=pelicula.id))
+	return HttpResponseRedirect(urlresolvers.reverse('pelicula_detail', args=(pelicula.id,)))
 
 # Detail
 class PeliculaDetail(DetailView):

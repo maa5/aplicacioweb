@@ -26,7 +26,7 @@ urlpatterns = patterns('',
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-   	 url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', include(admin.site.urls)),
 
 	 # Create
 	 url(r'^pelicules/create/$', 
@@ -79,7 +79,7 @@ urlpatterns = patterns('',
 		DirectorDelete.as_view(),
 		name='director_delete'),
 
-	 url(r'^pelicules/(?P<idn>\d+)/reviews/create$', 'pelis.views.review', name='review_create'),
+	 url(r'^pelicules/(?P<pk>\d+)/reviews/create$', 'pelis.views.review', name='review_create'),
 
 	 # RESTful API
     url(r'^api/pelicules/$', APIPeliculesList.as_view(), name='pelicules-list'),

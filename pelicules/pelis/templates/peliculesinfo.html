@@ -42,9 +42,9 @@
 </span>
 
 <h3>Add Review</h3>
-	<form action="{% url 'pelis:review_create' pelicula.id %}" method="POST">
+	<form action="{% url 'review_create' pelicula.id %}" method="post">
     {% csrf_token %}
-    	Message: <textarea name="comment" id="comment" rows="4"></textarea>
+    	Message: <br/><textarea name="comment" id="comment" rows="4"></textarea>
     <p>Rating:</p>
     <p>
     {% for rate in RATING_CHOICES %}
