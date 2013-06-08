@@ -1,13 +1,18 @@
-{% extends "mainpage.html"%}
+{% extends "mainpage.html" %}
 {% load static %}
+{% block title %}{{pelicula.Titol}}{% endblock %}
 {% block content %}
+
 <span vocab="http://schema.org/"  typeof="Pelicula">
-<h1><span property="name">{{ pelicula.Titol }}</span></h1>
-	<img src={{pelicula.Foto}} heigth=400 width=200/>		
-	<p><b>Argument:</b> {{pelicula.Argument}}</p>
-	<p><b>Data:</b> {{pelicula.Data}}</p>
-	<p><b>Director:</b> <a href="/directors/{{pelicula.Director.id}}">{{pelicula.Director}}</a></p>
-	<p><b>Actors/Actrius:</b></p>
+<h1>
+	<span property="name">{{ pelicula.Titol }}</span>
+</h1>
+	
+<img src={{pelicula.Foto}} heigth=400 width=200/>		
+<p><b>Argument:</b> {{pelicula.Argument}}</p>
+<p><b>Data:</b> {{pelicula.Data}}</p>
+<p><b>Director:</b> <a href="/directors/{{pelicula.Director.id}}">{{pelicula.Director}}</a></p>
+<p><b>Actors/Actrius:</b></p>
 	<ol>
 		{% for actor in actors %}
 		<li>
@@ -40,7 +45,8 @@
    </ul>
 {% endif %}
 </span>
-
+{% if  user.id %}
+{% if  canAddReview == 0 %}
 <h3>Add Review</h3>
 	<form action="{% url 'review_create' pelicula.id %}" method="post">
     {% csrf_token %}
@@ -54,4 +60,6 @@
     </p>
     <input type="submit" value="Review" />
 </form>
+{% endif %}
+{% endif %}
 {% endblock %}

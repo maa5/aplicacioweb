@@ -12,6 +12,8 @@
 		</li>
 		{% endfor %}
 	</ol>
+{% if user.id %}
 <div style="background-color:orange;text-align:center;width:300">
 	<a href="/actors/create">Add Actor</a></div>
+{% endif  %}
 {% endblock %}}

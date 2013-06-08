@@ -68,9 +68,13 @@ def peliculesinfo(request, idn):
 		reviews = PeliculesReview.objects.all().filter(Pelicula=idn)
 		RATING_CHOICES = PeliculesReview.RATING_CHOICES
 		mitja=0.0
+		id=request.user.id
+		canAddReview=0
 		if(len(reviews)!=0):
 			for review in reviews:
 				mitja=mitja+review.rating
+				if(id==review.user.id):
+					canAddReview=1
 			mitja=mitja/(len(reviews))
 	except Pelicula.DoesNotExist:
 		raise Http404('Error pelicula')
@@ -83,7 +87,8 @@ def peliculesinfo(request, idn):
 				'reviews': reviews,
 				'user': request.user,
 				'RATING_CHOICES': RATING_CHOICES,
-				'mitja': mitja
+				'mitja': mitja,
+				'canAddReview':canAddReview
 			},context_instance=RequestContext(request))
 
 def actorspage(request):
