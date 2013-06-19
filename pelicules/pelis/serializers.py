@@ -4,10 +4,10 @@ from rest_framework.serializers import HyperlinkedModelSerializer
 from models import *
 
 class PeliculesSerializer(HyperlinkedModelSerializer):
-	url = HyperlinkedIdentityField(view_name='pelicules-detail')
-	Director = HyperlinkedRelatedField(many=False, read_only=True, view_name='directors-detail')
-	Genere = HyperlinkedRelatedField(many=False, read_only=True, view_name='generes-detail')
-	Actor = HyperlinkedRelatedField(many=True, read_only=True, view_name='actors-detail')
+	url = HyperlinkedIdentityField(view_name='pelicula-detail')
+	Director = HyperlinkedRelatedField(many=False, read_only=True, view_name='director-detail')
+	Genere = HyperlinkedRelatedField(many=False, read_only=True, view_name='genere-detail')
+	Actor = HyperlinkedRelatedField(many=True, read_only=True, view_name='actor-detail')
 	user = CharField(read_only=True)
 
 	class Meta:
@@ -15,16 +15,16 @@ class PeliculesSerializer(HyperlinkedModelSerializer):
 		fields = ('url', 'Titol', 'Data', 'Argument', 'Director', 'Genere', 'Foto', 'Actor', 'user')
 
 class GeneresSerializer(HyperlinkedModelSerializer):
-	url = HyperlinkedIdentityField(view_name='generes-detail')
-	pelicula_set = HyperlinkedRelatedField(many=True, read_only=True, view_name='pelicules-detail')
+	url = HyperlinkedIdentityField(view_name='genere-detail')
+	pelicula_set = HyperlinkedRelatedField(many=True, read_only=True, view_name='pelicula-detail')
 
 	class Meta:
 		model = Genere
 		fields = ('url', 'NomGenere', 'pelicula_set')
 
 class ActorsSerializer(HyperlinkedModelSerializer):
-	url = HyperlinkedIdentityField(view_name='actors-detail')
-	pelicula_set = HyperlinkedRelatedField(many=True, read_only=True, view_name='pelicules-detail')
+	url = HyperlinkedIdentityField(view_name='actor-detail')
+	pelicula_set = HyperlinkedRelatedField(many=True, read_only=True, view_name='pelicula-detail')
 	user = CharField(read_only=True)
 
 	class Meta:
@@ -32,8 +32,8 @@ class ActorsSerializer(HyperlinkedModelSerializer):
 		fields = ('url', 'Nom', 'Cognom', 'date', 'descripcio', 'Foto', 'user', 'pelicula_set')
 
 class DirectorsSerializer(HyperlinkedModelSerializer):
-	url = HyperlinkedIdentityField(view_name='directors-detail')
-	pelicula_set = HyperlinkedRelatedField(many=True, read_only=True, view_name='pelicules-detail')
+	url = HyperlinkedIdentityField(view_name='director-detail')
+	pelicula_set = HyperlinkedRelatedField(many=True, read_only=True, view_name='pelicula-detail')
 	user = CharField(read_only=True)
 
 	class Meta:
